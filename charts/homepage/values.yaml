@@ -33,7 +33,7 @@ config:
       #   memory: 128Mi
       # requests:
       #   cpu: 100m
-      #   memory: 128Mi   
+      #   memory: 128Mi
 
   # Fetch data from an S3 bucket that the homepage will use.
   s3Fetcher:
@@ -65,7 +65,7 @@ config:
       #   memory: 128Mi
       # requests:
       #   cpu: 100m
-      #   memory: 128Mi  
+      #   memory: 128Mi
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 replicaCount: 1
