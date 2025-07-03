@@ -31,13 +31,7 @@ jobs:
       - name: Login to GHCR
         run: echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Push Charts to GHCR
+      - name: Package and Push Chart to GHCR
         run: |
-          for chart_dir in charts/*/; do
-            chart_name=$(basename "$chart_dir")
-            version=$(grep '^version:' "$chart_dir/Chart.yaml" | awk '{print $2}')
-
-            # Save and push using Helm's OCI support
-            helm chart save "$chart_dir" "ghcr.io/${{ github.repository_owner }}/$chart_name:$version"
-            helm chart push "ghcr.io/${{ github.repository_owner }}/$chart_name:$version"
-          done
+          helm package ./charts/homepage --destination ./packaged
+          helm push ./packaged/homepage-*.tgz oci://ghcr.io/${{ github.repository_owner }}
