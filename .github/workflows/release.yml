@@ -33,5 +33,6 @@ jobs:
 
       - name: Package and Push Chart to GHCR
         run: |
+          OWNER="${GITHUB_ACTOR,,}"
           helm package ./charts/homepage --destination ./packaged
-          helm push ./packaged/homepage-*.tgz oci://ghcr.io/${{ github.repository_owner }}
+          helm push ./packaged/homepage-*.tgz oci://ghcr.io/${OWNER}
