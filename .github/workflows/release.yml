@@ -35,4 +35,4 @@ jobs:
         run: |
           OWNER="${GITHUB_ACTOR,,}"
           helm package ./charts/homepage --destination ./packaged
-          helm push ./packaged/homepage-*.tgz oci://ghcr.io/${OWNER}
+          helm push ./packaged/homepage-*.tgz oci://ghcr.io/aidan-wallace
