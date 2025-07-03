@@ -29,10 +29,10 @@ jobs:
           version: "v3.18.2"
 
       - name: Login to GHCR
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io -u ${{ github.actor }} --password-stdin
+        run: echo "${{ secrets.GH_PAT }}" | helm registry login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Package and Push Chart to GHCR
         run: |
           OWNER="${GITHUB_ACTOR,,}"
           helm package ./charts/homepage --destination ./packaged
-          helm push ./packaged/homepage-*.tgz oci://ghcr.io/aidan-wallace
+          helm push ./packaged/homepage-*.tgz oci://ghcr.io/$OWNER
