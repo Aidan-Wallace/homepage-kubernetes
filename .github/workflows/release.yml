@@ -6,15 +6,15 @@ on:
     branches: ["main"]
     paths:
       - "charts/**"
+  pull_request:
+    branches: ["main"]
 
 permissions:
-  contents: write
+  contents: read
   packages: write
 
 jobs:
   release:
-    if: github.event_name != 'pull_request'
-
     runs-on: ubuntu-latest
 
     steps:
@@ -28,29 +28,16 @@ jobs:
         with:
           version: 3.13.2
 
-      - name: Configure Git
-        run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.2.0
-        env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Login to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Push Charts to GHCR
         run: |
-          for pkg in .cr-release-packages/*; do
-            if [ -z "${pkg:-}" ]; then
-              break
-            fi
+          for chart_dir in charts/*/; do
+            chart_name=$(basename "$chart_dir")
+            version=$(grep '^version:' "$chart_dir/Chart.yaml" | awk '{print $2}')
 
-            helm push "${pkg}" oci://ghcr.io/aidan-wallace/charts
+            # Save and push using Helm's OCI support
+            helm chart save "$chart_dir" "ghcr.io/${{ github.repository_owner }}/$chart_name:$version"
+            helm chart push "ghcr.io/${{ github.repository_owner }}/$chart_name:$version"
           done
