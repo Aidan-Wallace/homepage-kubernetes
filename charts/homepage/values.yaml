@@ -91,6 +91,11 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
+  # Configuration for creating a ClusterRoleBinding. This is required by the ingressFiner container
+  clusterRoleBinding:
+    create: true
+    roleName: "cluster-admin"
+
 # This is for setting Kubernetes Annotations to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 podAnnotations: {}

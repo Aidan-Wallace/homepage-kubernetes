@@ -120,7 +120,7 @@ spec:
           {{- end }}
           env:
             - name: SleepIntervalSecs
-              value: {{ .Values.config.ingressFinder.sleepIntervalSecs | default "60" }}
+              value: {{ .Values.config.ingressFinder.sleepIntervalSecs | default "60" | quote }}
             - name: ServicesFilepath
               # TODO: Dynamically set dir based on volumeMounts
               value: "/app/config/services.yaml"
