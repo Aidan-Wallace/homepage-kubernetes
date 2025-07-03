@@ -7,9 +7,12 @@ config:
   # More information can be found here: https://github.com/gethomepage/homepage/blob/dev/docs/installation/index.md#homepage_allowed_hosts
   allowedHosts: "example.local"
 
+  # a sidecar container that will automatically scan ingress annotations and automatically append the ingress
+  # url to the homepage app.
   ingressFinder:
     enabled: false
 
+    # Time to sleep between loop iterations
     sleepIterationSeconds: 30
 
     # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
@@ -32,9 +35,11 @@ config:
       #   cpu: 100m
       #   memory: 128Mi   
 
+  # Fetch data from an S3 bucket that the homepage will use.
   s3Fetcher:
     enabled: false
 
+    # Create a secret to store aws-secrets. This can be disabled to allow the user to create the secrets
     createSecret: true
     secretName: aws-secrets
     accessKeyId: ""
