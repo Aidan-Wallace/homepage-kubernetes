@@ -14,7 +14,7 @@ config:
 
     # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
     image:
-      repository: ghcr.io/gethomepage/homepage
+      repository: ghcr.io/aidan-wallace/homepage-extensions/homepage-annotations
       # This sets the pull policy for images.
       pullPolicy: IfNotPresent
       # Overrides the image tag whose default is the chart appVersion.
@@ -31,6 +31,36 @@ config:
       # requests:
       #   cpu: 100m
       #   memory: 128Mi   
+
+  s3Fetcher:
+    enabled: false
+
+    createSecret: true
+    secretName: aws-secrets
+    accessKeyId: ""
+    secretAccessKey: ""
+    region: ""
+    s3Path: ""
+
+    # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
+    image:
+      repository: amazon/aws-cli
+      # This sets the pull policy for images.
+      pullPolicy: IfNotPresent
+      # Overrides the image tag whose default is the chart appVersion.
+      tag: "2.27.48"
+
+    resources: {}
+      # We usually recommend not to specify default resources and to leave this as a conscious
+      # choice for the user. This also increases chances charts run on environments with little
+      # resources, such as Minikube. If you do want to specify resources, uncomment the following
+      # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi  
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 replicaCount: 1

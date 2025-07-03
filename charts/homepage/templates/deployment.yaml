@@ -30,6 +30,46 @@ spec:
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      initContainers:
+        {{- if .Values.config.s3Fetcher.enabled }}
+        - name: s3-fetcher
+          {{- with .Values.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          image: "{{ .Values.config.s3Fetcher.image.repository }}:{{ .Values.config.s3Fetcher.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.config.s3Fetcher.image.pullPolicy }}
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets
+                  key: AWS_SECRET_ACCESS_KEY
+            - name: AWS_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets
+                  key: AWS_REGION
+            - name: S3_PATH
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets
+                  key: AWS_S3_PATH
+          command: ["sh", "-c", "aws s3 cp ${S3_PATH} /app/config --recursive"]
+          {{- with .Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.config.s3Fetcher.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+        {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           {{- with .Values.securityContext }}
