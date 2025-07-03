@@ -60,6 +60,7 @@ spec:
                 secretKeyRef:
                   name: aws-secrets
                   key: AWS_S3_PATH
+          # TODO: Dynamically set dir based on volumeMounts
           command: ["sh", "-c", "aws s3 cp ${S3_PATH} /app/config --recursive"]
           {{- with .Values.volumeMounts }}
           volumeMounts:
@@ -121,6 +122,7 @@ spec:
             - name: SleepIntervalSecs
               value: {{ .Values.config.ingressFinder.sleepIntervalSecs | default "60" }}
             - name: ServicesFilepath
+              # TODO: Dynamically set dir based on volumeMounts
               value: "/app/config/services.yaml"
         {{- end }}
       {{- with .Values.volumes }}
