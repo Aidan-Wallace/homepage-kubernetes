@@ -1,11 +1,11 @@
-name: Helm Chart
+name: Helm Chart CI
 
 on:
   workflow_dispatch:
   pull_request:
     branches: ["main"]
     paths:
-      - "charts/kubernetes-dashboard-token-api/**"
+      - "charts/**"
 
 permissions:
   contents: write
