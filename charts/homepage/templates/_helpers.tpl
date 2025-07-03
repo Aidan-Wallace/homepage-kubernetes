@@ -6,6 +6,20 @@ Expand the name of the chart.
 {{- end }}
 
 {{/*
+Create the name of the ingress finder container.
+*/}}
+{{- define "homepage.ingressFinderName" -}}
+{{ .Chart.Name }}-ingress-finder
+{{- end }}
+
+{{/*
+Create the name of the ingress finder container.
+*/}}
+{{- define "homepage.s3FetcherName" -}}
+{{ .Chart.Name }}-s3-fetcher
+{{- end }}
+
+{{/*
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
