@@ -124,6 +124,8 @@ spec:
             - name: ServicesFilepath
               # TODO: Dynamically set dir based on volumeMounts
               value: "/app/config/services.yaml"
+            - name: Serilog__MinimumLevel__Default
+              value: {{ .Values.config.ingressFinder.logLevel | default "Information" | quote }}
         {{- end }}
       {{- with .Values.volumes }}
       volumes:
