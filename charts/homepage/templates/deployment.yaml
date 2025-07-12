@@ -102,15 +102,15 @@ spec:
           env:
             - name: HOMEPAGE_ALLOWED_HOSTS
               value: {{ .Values.config.allowedHosts }}
-        {{- if .Values.config.ingressFinder.enabled }}
-        - name: {{ include "homepage.ingressFinderName" . }}
+        {{- if .Values.config.appEntryBuilder.enabled }}
+        - name: {{ include "homepage.appBuilder" . }}
           {{- with .Values.securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          image: "{{ .Values.config.ingressFinder.image.repository }}:{{ .Values.config.ingressFinder.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.config.ingressFinder.image.pullPolicy }}
-          {{- with .Values.config.ingressFinder.resources }}
+          image: "{{ .Values.config.appEntryBuilder.image.repository }}:{{ .Values.config.appEntryBuilder.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.config.appEntryBuilder.image.pullPolicy }}
+          {{- with .Values.config.appEntryBuilder.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -120,12 +120,12 @@ spec:
           {{- end }}
           env:
             - name: SleepIntervalSecs
-              value: {{ .Values.config.ingressFinder.sleepIntervalSecs | default "60" | quote }}
+              value: {{ .Values.config.appEntryBuilder.sleepIntervalSecs | default "60" | quote }}
             - name: ServicesFilepath
               # TODO: Dynamically set dir based on volumeMounts
               value: "/app/config/services.yaml"
             - name: Serilog__MinimumLevel__Default
-              value: {{ .Values.config.ingressFinder.logLevel | default "Information" | quote }}
+              value: {{ .Values.config.appEntryBuilder.logLevel | default "Information" | quote }}
         {{- end }}
       {{- with .Values.volumes }}
       volumes:

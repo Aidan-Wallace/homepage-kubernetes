@@ -31,7 +31,7 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-  # Configuration for creating a ClusterRoleBinding. This is required by the ingressFiner container
+  # Configuration for creating a ClusterRoleBinding. This is required by the app builder container
   clusterRoleBinding:
     create: true
     roleName: "cluster-admin"
@@ -128,9 +128,9 @@ config:
   # More information can be found here: https://github.com/gethomepage/homepage/blob/dev/docs/installation/index.md#homepage_allowed_hosts
   allowedHosts: "example.local"
 
-  # a sidecar container that will automatically scan ingress annotations and automatically append the ingress
+  # a sidecar container that will automatically build app entries for Homepage based off Kubernetes resources.
   # url to the homepage app.
-  ingressFinder:
+  appEntryBuilder:
     enabled: false
 
     # Time to sleep between loop iterations

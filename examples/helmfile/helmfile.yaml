@@ -15,5 +15,5 @@ releases:
                   pathType: ImplementationSpecific
 
         config:
-          ingressFinder:
+          appEntryBuilder:
             enabled: true
