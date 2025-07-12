@@ -3,6 +3,19 @@ entries:
   homepage:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2025-07-12T01:40:48.406381416Z"
+    description: A Helm chart for Kubernetes
+    digest: 184f6f2316ae584bf943c6b82ea9e9d564958e83804b096f7d2093093bd6d97c
+    maintainers:
+    - email: aidanwallacedev@gmail.com
+      name: aidan-wallace
+    name: homepage
+    type: application
+    urls:
+    - https://github.com/Aidan-Wallace/homepage-kubernetes/releases/download/homepage-0.2.0/homepage-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2025-07-09T01:51:22.979282831Z"
     description: A Helm chart for Kubernetes
     digest: a3e9f3aca8f57f977f4f50db1e438bb594a9dc5026c81ee04bdfa4ce91fd04a7
@@ -27,4 +40,4 @@ entries:
     urls:
     - https://github.com/Aidan-Wallace/homepage-kubernetes/releases/download/homepage-0.1.0/homepage-0.1.0.tgz
     version: 0.1.0
-generated: "2025-07-09T01:51:22.979304962Z"
+generated: "2025-07-12T01:40:48.406393749Z"
