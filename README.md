@@ -63,20 +63,20 @@ config:
 ### Example
 To enable the S3 Fetcher, deploy the chart with the above configuration.
 
-## Ingress Finder
+## homepage service file builder
 
-The Ingress Finder is a sidecar container that scans for ingress URLs and appends them to sections of the [`services.yaml`](https://gethomepage.dev/widgets/) file. This is useful for dynamically updating the application with ingress information.
+The app entry builder is a sidecar container that scans for Kubernetes resource URLs and appends them to sections of the [`services.yaml`](https://gethomepage.dev/widgets/) file. This is useful for dynamically updating the application with deployed app information.
 
 ### Configuration
 Add the following configuration to your `values.yaml` file:
 ```yaml
 config:
-  ingressFinder:
+  appEntryBuilder:
     enabled: true
     sleepIntervalSecs: 60
 ```
 
 ### Example
-To enable the Ingress Finder, deploy the chart with the above configuration.
+To enable the app entry builder, deploy the chart with the above configuration.
 
-> **Note**: The Ingress Finder is currently a [private image and repo](https://github.com/aidan-Wallace/homepage-extensions/), but plans are in place to release it soon.
+> **Note**: The app entry builder is currently a [private image and repo](https://github.com/aidan-Wallace/homepage-extensions/), but plans are in place to release it soon.
