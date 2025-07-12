@@ -6,14 +6,14 @@ Expand the name of the chart.
 {{- end }}
 
 {{/*
-Create the name of the ingress finder container.
+Create the name of the Homepage app builder container.
 */}}
-{{- define "homepage.ingressFinderName" -}}
-{{ .Chart.Name }}-ingress-finder
+{{- define "homepage.appBuilder" -}}
+{{ .Chart.Name }}-app-entry-builder
 {{- end }}
 
 {{/*
-Create the name of the ingress finder container.
+Create the name of the S3 data fetcher container.
 */}}
 {{- define "homepage.s3FetcherName" -}}
 {{ .Chart.Name }}-s3-fetcher
