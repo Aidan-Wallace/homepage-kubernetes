@@ -140,7 +140,7 @@ spec:
         - name: config
       {{- if eq .Values.config.provider "configMap" }}
           configMap:
-            name: {{ include "homepage.fullname" . }}
+            name: {{ include "homepage.filesConfigMapName" . }}
       {{- else if eq .Values.config.provider "s3" }}
           emptyDir: {}
       {{- else }}
