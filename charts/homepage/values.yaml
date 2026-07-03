@@ -128,37 +128,6 @@ config:
   # More information can be found here: https://github.com/gethomepage/homepage/blob/dev/docs/installation/index.md#homepage_allowed_hosts
   allowedHosts: "example.local"
 
-  # a sidecar container that will automatically build app entries for Homepage based off Kubernetes resources.
-  # url to the homepage app.
-  appEntryBuilder:
-    enabled: false
-
-    # Time to sleep between loop iterations
-    sleepIterationSeconds: 30
-
-    # Log Level. [Trace, Debug, Information, Warning, Error, Critical]
-    logLevel: "Information"
-
-    # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
-    image:
-      repository: ghcr.io/aidan-wallace/homepage-extensions/homepage-annotations
-      # This sets the pull policy for images.
-      pullPolicy: IfNotPresent
-      # Overrides the image tag whose default is the chart appVersion.
-      tag: "latest"
-
-    resources: {}
-      # We usually recommend not to specify default resources and to leave this as a conscious
-      # choice for the user. This also increases chances charts run on environments with little
-      # resources, such as Minikube. If you do want to specify resources, uncomment the following
-      # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-      # limits:
-      #   cpu: 100m
-      #   memory: 128Mi
-      # requests:
-      #   cpu: 100m
-      #   memory: 128Mi
-
   # Fetch data from an S3 bucket that the homepage will use.
   s3Fetcher:
     enabled: false
@@ -287,3 +256,34 @@ configFiles:
 extraFiles: []
   # my-dashboard.yaml: |
   #   foo: bar
+
+# a sidecar container that will automatically build app entries for Homepage based off Kubernetes resources.
+# url to the homepage app.
+appEntryBuilder:
+  enabled: false
+
+  # Time to sleep between loop iterations
+  sleepIterationSeconds: 30
+
+  # Log Level. [Trace, Debug, Information, Warning, Error, Critical]
+  logLevel: "Information"
+
+  # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
+  image:
+    repository: ghcr.io/aidan-wallace/homepage-extensions/homepage-annotations
+    # This sets the pull policy for images.
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "latest"
+
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
