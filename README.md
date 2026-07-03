@@ -52,7 +52,7 @@ The S3 Fetcher allows Homepage data to be stored in an S3 bucket and retrieved v
 Add the following configuration to your `values.yaml` file:
 ```yaml
 config:
-  s3Fetcher:
+  s3:
     enabled: true
     accessKeyId: "aws access key id"
     secretAccessKey: "aws secret access key"

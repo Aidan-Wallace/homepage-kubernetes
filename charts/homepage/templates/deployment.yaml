@@ -31,14 +31,14 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       initContainers:
-        {{- if eq .Values.config.provider "s3Fetcher" }}
-        - name: {{ include "homepage.s3FetcherName" . }}
+        {{- if eq .Values.config.provider "s3" }}
+        - name: {{ include "homepage.s3Name" . }}
           {{- with .Values.securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          image: "{{ .Values.config.s3Fetcher.image.repository }}:{{ .Values.config.s3Fetcher.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.config.s3Fetcher.image.pullPolicy }}
+          image: "{{ .Values.config.s3.image.repository }}:{{ .Values.config.s3.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.config.s3.image.pullPolicy }}
           env:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
@@ -68,7 +68,7 @@ spec:
           {{- end }}
             - name: config
               mountPath: /app/config
-          {{- with .Values.config.s3Fetcher.resources }}
+          {{- with .Values.config.s3.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -141,7 +141,7 @@ spec:
       {{- if eq .Values.config.provider "configMap" }}
           configMap:
             name: {{ include "homepage.fullname" . }}
-      {{- else if eq .Values.config.provider "s3Fetcher" }}
+      {{- else if eq .Values.config.provider "s3" }}
           emptyDir: {}
       {{- else }}
       {{- fail (printf "Unsupported config.provider %q" .Values.config.provider) }}

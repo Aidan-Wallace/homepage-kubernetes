@@ -15,7 +15,7 @@ Create the name of the Homepage app builder container.
 {{/*
 Create the name of the S3 data fetcher container.
 */}}
-{{- define "homepage.s3FetcherName" -}}
+{{- define "homepage.s3Name" -}}
 {{ .Chart.Name }}-s3-fetcher
 {{- end }}
 
