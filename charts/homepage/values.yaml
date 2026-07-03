@@ -101,21 +101,17 @@ readinessProbe:
     port: http
 
 # Additional volumes on the output Deployment definition.
-volumes:
+volumes: []
   # - name: foo
   #   secret:
   #     secretName: mysecret
   #     optional: false
-  - name: config
-    emptyDir: {}
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts:
+volumeMounts: []
   # - name: foo
   #   mountPath: "/etc/foo"
   #   readOnly: true
-  - name: config
-    mountPath: /app/config
 
 nodeSelector: {}
 
@@ -128,10 +124,10 @@ config:
   # More information can be found here: https://github.com/gethomepage/homepage/blob/dev/docs/installation/index.md#homepage_allowed_hosts
   allowedHosts: "example.local"
 
+  provider: s3Fetcher # configMap | s3Fetcher
+
   # Fetch data from an S3 bucket that the homepage will use.
   s3Fetcher:
-    enabled: false
-
     # Create a secret to store aws-secrets. This can be disabled to allow the user to create the secrets
     createSecret: true
     secretName: aws-secrets
@@ -160,102 +156,102 @@ config:
       #   cpu: 100m
       #   memory: 128Mi
 
-configFiles:
-  bookmarks.yaml: |
-    ---
-    # For configuration options and examples, please see:
-    # https://gethomepage.dev/configs/bookmarks
+  configMap:
+    bookmarks.yaml: |
+      ---
+      # For configuration options and examples, please see:
+      # https://gethomepage.dev/configs/bookmarks
 
-    - Developer:
-        - Github:
-            - abbr: GH
-              href: https://github.com/
+      - Developer:
+          - Github:
+              - abbr: GH
+                href: https://github.com/
 
-    - Social:
-        - Reddit:
-            - abbr: RE
-              href: https://reddit.com/
+      - Social:
+          - Reddit:
+              - abbr: RE
+                href: https://reddit.com/
 
-    - Entertainment:
-        - YouTube:
-            - abbr: YT
-              href: https://youtube.com/
+      - Entertainment:
+          - YouTube:
+              - abbr: YT
+                href: https://youtube.com/
 
-  custom.css: |
-    /* Use this section to add custom CSS to your homepage */
+    custom.css: |
+      /* Use this section to add custom CSS to your homepage */
 
-  custom.js: |
-    // Use this section to add custom JS to your homepage
+    custom.js: |
+      // Use this section to add custom JS to your homepage
 
-  docker.yaml: |
-    ---
-    # For configuration options and examples, please see:
-    # https://gethomepage.dev/configs/docker/
+    docker.yaml: |
+      ---
+      # For configuration options and examples, please see:
+      # https://gethomepage.dev/configs/docker/
 
-    # my-docker:
-    #   host: 127.0.0.1
-    #   port: 2375
+      # my-docker:
+      #   host: 127.0.0.1
+      #   port: 2375
 
-    # my-docker:
-    #   socket: /var/run/docker.sock
+      # my-docker:
+      #   socket: /var/run/docker.sock
 
-  kubernetes.yaml: |
-    ---
-    # sample kubernetes config
+    kubernetes.yaml: |
+      ---
+      # sample kubernetes config
 
-  proxmox.yaml: |
-    ---
-    # pve:
-    #   url: https://proxmox.host.or.ip:8006
-    #   token: username@pam!Token ID
-    #   secret: secret
+    proxmox.yaml: |
+      ---
+      # pve:
+      #   url: https://proxmox.host.or.ip:8006
+      #   token: username@pam!Token ID
+      #   secret: secret
 
-  services.yaml: |
-    ---
-    # For configuration options and examples, please see:
-    # https://gethomepage.dev/configs/services/
+    services.yaml: |
+      ---
+      # For configuration options and examples, please see:
+      # https://gethomepage.dev/configs/services/
 
-    - My First Group:
-        - My First Service:
-            href: http://localhost/
-            description: Homepage is awesome
+      - My First Group:
+          - My First Service:
+              href: http://localhost/
+              description: Homepage is awesome
 
-    - My Second Group:
-        - My Second Service:
-            href: http://localhost/
-            description: Homepage is the best
+      - My Second Group:
+          - My Second Service:
+              href: http://localhost/
+              description: Homepage is the best
 
-    - My Third Group:
-        - My Third Service:
-            href: http://localhost/
-            description: Homepage is 😎
+      - My Third Group:
+          - My Third Service:
+              href: http://localhost/
+              description: Homepage is 😎
 
-  settings.yaml: |
-    ---
-    # For configuration options and examples, please see:
-    # https://gethomepage.dev/configs/settings/
+    settings.yaml: |
+      ---
+      # For configuration options and examples, please see:
+      # https://gethomepage.dev/configs/settings/
 
-    providers:
-      openweathermap: openweathermapapikey
-      weatherapi: weatherapiapikey
+      providers:
+        openweathermap: openweathermapapikey
+        weatherapi: weatherapiapikey
 
-  widgets.yaml: |
-    ---
-    # For configuration options and examples, please see:
-    # https://gethomepage.dev/configs/info-widgets/
+    widgets.yaml: |
+      ---
+      # For configuration options and examples, please see:
+      # https://gethomepage.dev/configs/info-widgets/
 
-    - resources:
-        cpu: true
-        memory: true
-        disk: /
+      - resources:
+          cpu: true
+          memory: true
+          disk: /
 
-    - search:
-        provider: duckduckgo
-        target: _blank
+      - search:
+          provider: duckduckgo
+          target: _blank
 
-extraFiles: []
-  # my-dashboard.yaml: |
-  #   foo: bar
+  extraFiles: []
+    # my-dashboard.yaml: |
+    #   foo: bar
 
 # a sidecar container that will automatically build app entries for Homepage based off Kubernetes resources.
 # url to the homepage app.

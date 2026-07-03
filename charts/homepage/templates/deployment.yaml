@@ -31,7 +31,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       initContainers:
-        {{- if .Values.config.s3Fetcher.enabled }}
+        {{- if eq .Values.config.provider "s3Fetcher" }}
         - name: {{ include "homepage.s3FetcherName" . }}
           {{- with .Values.securityContext }}
           securityContext:
@@ -62,10 +62,12 @@ spec:
                   key: AWS_S3_PATH
           # TODO: Dynamically set dir based on volumeMounts
           command: ["sh", "-c", "aws s3 cp ${S3_PATH} /app/config --recursive"]
-          {{- with .Values.volumeMounts }}
           volumeMounts:
+          {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
+            - name: config
+              mountPath: /app/config
           {{- with .Values.config.s3Fetcher.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
@@ -95,10 +97,12 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
+          {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
+            - name: config
+              mountPath: /app/config
           env:
             - name: HOMEPAGE_ALLOWED_HOSTS
               value: {{ .Values.config.allowedHosts }}
@@ -114,10 +118,12 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
+          {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
+            - name: config
+              mountPath: /app/config
           env:
             - name: SleepIntervalSecs
               value: {{ .Values.appEntryBuilder.sleepIntervalSecs | default "60" | quote }}
@@ -127,9 +133,18 @@ spec:
             - name: Serilog__MinimumLevel__Default
               value: {{ .Values.appEntryBuilder.logLevel | default "Information" | quote }}
         {{- end }}
-      {{- with .Values.volumes }}
       volumes:
+      {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
+      {{- end }}
+        - name: config
+      {{- if eq .Values.config.provider "configMap" }}
+          configMap:
+            name: {{ include "homepage.fullname" . }}
+      {{- else if eq .Values.config.provider "s3Fetcher" }}
+          emptyDir: {}
+      {{- else }}
+      {{- fail (printf "Unsupported config.provider %q" .Values.config.provider) }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
