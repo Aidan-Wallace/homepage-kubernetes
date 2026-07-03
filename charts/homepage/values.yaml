@@ -249,6 +249,9 @@ config:
           provider: duckduckgo
           target: _blank
 
+  # Add extra files to the homepage configuration folder.
+  # Note that these files will be merged with the default
+  # configuration files and will override any existing configuration.
   extraFiles: []
     # my-dashboard.yaml: |
     #   foo: bar
