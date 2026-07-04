@@ -135,7 +135,7 @@ config:
   # More information can be found here: https://github.com/gethomepage/homepage/blob/dev/docs/installation/index.md#homepage_allowed_hosts
   allowedHosts: "example.local"
 
-  provider: configMap # configMap | s3
+  provider: configMap  # configMap | s3
 
   # Fetch data from an S3 bucket that the homepage will use.
   s3:

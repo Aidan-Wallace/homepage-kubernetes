@@ -72,6 +72,21 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+        {{- else if eq .Values.config.provider "configMap" }}
+      initContainers:
+        - name: copy-config
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - |
+              cp -a /config-src/. /app/config/
+          volumeMounts:
+            - name: config-src
+              mountPath: /config-src
+              readOnly: true
+            - name: config
+              mountPath: /app/config
         {{- end }}
       containers:
         - name: {{ .Chart.Name }}
@@ -137,11 +152,14 @@ spec:
       {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-        - name: config
       {{- if eq .Values.config.provider "configMap" }}
+        - name: config-src
           configMap:
             name: {{ include "homepage.filesConfigMapName" . }}
+        - name: config
+          emptyDir: {}
       {{- else if eq .Values.config.provider "s3" }}
+        - name: config
           emptyDir: {}
       {{- else }}
       {{- fail (printf "Unsupported config.provider %q" .Values.config.provider) }}
