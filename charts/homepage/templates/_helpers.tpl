@@ -15,8 +15,22 @@ Create the name of the Homepage app builder container.
 {{/*
 Create the name of the S3 data fetcher container.
 */}}
-{{- define "homepage.s3FetcherName" -}}
+{{- define "homepage.s3Name" -}}
 {{ .Chart.Name }}-s3-fetcher
+{{- end }}
+
+{{/*
+Create the name of the files configmap.
+*/}}
+{{- define "homepage.filesConfigMapName" -}}
+{{ .Chart.Name }}-files
+{{- end }}
+
+{{/*
+Create the name of the auth ingress middleware.
+*/}}
+{{- define "homepage.ingressAuthMiddlewareName" -}}
+{{ .Chart.Name }}-ingress-auth
 {{- end }}
 
 {{/*

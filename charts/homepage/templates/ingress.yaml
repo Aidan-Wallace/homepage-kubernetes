@@ -5,10 +5,24 @@ metadata:
   name: {{ include "homepage.fullname" . }}
   labels:
     {{- include "homepage.labels" . | nindent 4 }}
-  {{- with .Values.ingress.annotations }}
+
+{{- $annotations := dict -}}
+
+{{- with .Values.ingress.annotations }}
+{{- $annotations = merge $annotations . }}
+{{- end }}
+
+{{- if and .Values.ingress.auth.enabled (eq .Values.ingress.className "traefik") }}
+{{- $_ := set $annotations "traefik.ingress.kubernetes.io/router.middlewares"
+    (printf "%s-%s@kubernetescrd"
+      .Release.Namespace
+      (include "homepage.ingressAuthMiddlewareName" .)) }}
+{{- end }}
+
+{{- if gt (len $annotations) 0 }}
   annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+{{ toYaml $annotations | nindent 4 }}
+{{- end }}
 spec:
   {{- with .Values.ingress.className }}
   ingressClassName: {{ . }}
