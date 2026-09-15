@@ -2,6 +2,12 @@
 
 # homepage-helm
 
+> ⚠️ **DEPRECATED — This repository has moved**
+>
+> This repository is no longer maintained and has been archived. All future development will take place in the new repository.
+>
+> **<https://github.com/Aidan-Wallace/charts>**
+
 Helm charts for the [Homepage](https://github.com/gethomepage/homepage) application dashboard.
 
 ## Usage
